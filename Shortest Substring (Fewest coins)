@@ -1,0 +1,57 @@
+//String based
+
+//Given a String comprised of lowercase alphabets where every character denotes a type of coin.
+// eg: coins: "dabbcabcd" whre each character is coin. 
+// find the length of shortest substring which has all the types of coin present in it.
+// here two possible strings having all coins are "dabbc" and "abcd"; the shorter is "abcd" and hence answer is 4.
+
+
+import java.util.HashSet;
+
+public class Child{
+	public static int sizeOfMinString = 0;
+	public static void main(String args[])
+	{
+		int value = fewestCoins("ddccabcbbdaaa");
+		System.out.println("value: " +value);
+	}
+	
+	public static int fewestCoins(String coins)
+	{
+		HashSet<Character> hs = addElementsToSet(coins);
+		int hSize = hs.size();
+		System.out.println("hSize: " +hSize);
+		
+		for(int it = 0; it <coins.length()-4; it++) {	
+			int i = 0;
+			int j = i+hSize+it;
+			while(j != coins.length()+1)
+			{
+				HashSet<Character> hash = addElementsToSet(coins.substring(i, j));
+				if(hash.containsAll(hs))
+				{
+					sizeOfMinString = j-i;
+					return sizeOfMinString;
+				}
+				i++;
+				j++;
+			}
+			
+		}
+		return sizeOfMinString;
+	}
+
+	private static HashSet<Character> addElementsToSet(String coins) {
+		HashSet<Character> hs = new HashSet<Character>();
+		for(int i = 0; i<coins.length(); i++)
+		{
+			Character c = Character.valueOf(coins.charAt(i));
+			if(!hs.contains(c)) {
+				hs.add(c);
+			}
+		}
+		return hs;
+	}
+}
+ 
+
